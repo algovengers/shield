@@ -35,10 +35,12 @@ import i2 from "@/assets/images/2.png";
 import i3 from "@/assets/images/3.png";
 import i4 from "@/assets/images/4.png";
 import setup from "@/assets/images/setup.png";
+import profilebg from "@/assets/images/profilebg.png";
 
 export const images = {
   onboarding1,
   onboarding2,
+  profilebg,
   report,
   onboarding3,
   setup,
