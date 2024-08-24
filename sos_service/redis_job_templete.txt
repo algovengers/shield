@@ -1,0 +1,2 @@
+'{"task": "email", "to": "example@example.com", "subject": "SOS"}'
+'{"task": "sms", "to": "+917777777777", "subject": "SOS"}'
