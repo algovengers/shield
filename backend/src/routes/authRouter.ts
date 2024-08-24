@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { createSos } from "./sos.controller";
+import { createSos } from "../controllers/sos.controller";
 
 const authRouter = Router()
 
-authRouter.route('/hii').get(createSos)
+// authRouter.route('/hii').get()
+authRouter.route('/createSos').post(createSos);
 
 
 export {authRouter}
