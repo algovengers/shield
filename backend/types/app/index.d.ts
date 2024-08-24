@@ -8,10 +8,9 @@ interface User {
 
 interface Admin {
     id: string;
-    name: string;
     username: string;
     password: string;
-    refreshToken: string;
+    refreshToken?: string;
 }
 
 type MiddlewareAdmin = Omit<Admin,"password" | "refreshToken">

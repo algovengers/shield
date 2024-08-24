@@ -3,13 +3,12 @@ import React, { useState } from "react";
 import { icons, images } from "@/constants";
 import InputField from "@/components/InputField";
 import CustomButton from "@/components/CustomButton";
-import AddContact from "@/components/AddContact";
 
 const Setup = () => {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    phone: "",
+    password: "",
   });
 
   return (
@@ -27,14 +26,9 @@ const Setup = () => {
           </Text>
         </View>
 
-        <AddContact 
-          value1={form.name}
-          value2={form.email}
-          value3={form.phone}
-          onChangeText1={(text) => setForm({ ...form, name: text })}
-          onChangeText2={(text) => setForm({ ...form, email: text })}
-          onChangeText3={(text) => setForm({ ...form, phone: text })}
-        />
+        <View className="mt-7 space-y-2 bg-rose-100 h-64 rounded-xl px-5">
+          
+        </View>
 
         <CustomButton
           title="Add Contact"

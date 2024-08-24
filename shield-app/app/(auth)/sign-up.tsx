@@ -27,6 +27,7 @@ const SignUp = () => {
   const onSignUpPress = async () => {
     if (!isLoaded) return;
     try {
+
       await signUp.create({
         emailAddress: form.email,
         password: form.password,
@@ -37,8 +38,6 @@ const SignUp = () => {
         state: "pending",
       });
     } catch (err: any) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
       console.log(JSON.stringify(err, null, 2));
       Alert.alert("Error", err.errors[0].longMessage);
     }
@@ -50,13 +49,14 @@ const SignUp = () => {
         code: verification.code,
       });
       if (completeSignUp.status === "complete") {
-        await fetchAPI("/api/user", {
+        await fetchAPI("/api/v1/signup", {
           method: "POST",
           body: JSON.stringify({
             name: form.name,
             email: form.email,
             clerkId: completeSignUp.createdUserId,
           }),
+          headers: {'Content-Type': 'application/json'}
         });
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({

@@ -5,6 +5,7 @@ import { Alert, Image, Text, View } from "react-native";
 import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
 import { googleOAuth } from "@/lib/auth";
+import { fetchAPI } from "@/lib/fetch";
 
 const OAuth = () => {
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
@@ -12,6 +13,15 @@ const OAuth = () => {
   const handleGoogleSignIn = async () => {
     const result = await googleOAuth(startOAuthFlow);
 
+    // try {
+    //   const data = fetchAPI('/api/v1/signup',{
+    //     body: {
+
+    //     }
+    //   })
+    // } catch (error) {
+      
+    // }
     if (result.code === "session_exists") {
       Alert.alert("Success", "Session exists. Redirecting to home screen.");
       router.replace("/(root)/(tabs)/home");
