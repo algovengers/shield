@@ -1,4 +1,5 @@
 import email from "@/assets/icons/email.png";
+import phone from "@/assets/icons/phone.png";
 import education from "@/assets/icons/education.png";
 import health from "@/assets/icons/health.png";
 import licon from "@/assets/icons/licon.png";
@@ -8,6 +9,7 @@ import upload from "@/assets/icons/upload.png";
 import google from "@/assets/icons/google.png";
 import home from "@/assets/icons/home.png";
 import lock from "@/assets/icons/lock.png";
+import notibg from "@/assets/images/notibg.png";
 import person from "@/assets/icons/person.png";
 import eye from "@/assets/icons/eye.png";
 import eyeHide from "@/assets/icons/eye-hide.png";
@@ -43,6 +45,7 @@ export const images = {
   i1,
   i2,
   i3,
+  notibg,
   i4,
 };
 
@@ -71,10 +74,13 @@ export const categories = [
 
 export const icons = {
   eye,
+  accept,
+  cancel,
   licon,
   eyeHide,
   health,
   email,
+  notifications,
   eyecross,
   google,
   ricon,

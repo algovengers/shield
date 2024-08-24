@@ -56,17 +56,6 @@ export default function Layout() {
         />
 
         <Tabs.Screen
-          name="education"
-          options={{
-            title: "education",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon icon={icons.education} color={color} focused={focused} />
-            ),
-          }}
-        />
-
-        <Tabs.Screen
           name="report"
           options={{
             title: "report",
@@ -78,12 +67,16 @@ export default function Layout() {
         />
 
         <Tabs.Screen
-          name="health"
+          name="notifications"
           options={{
-            title: "health",
+            title: "notifications",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon icon={icons.health} color={color} focused={focused} />
+              <TabIcon
+                icon={icons.notifications}
+                color={color}
+                focused={focused}
+              />
             ),
           }}
         />
