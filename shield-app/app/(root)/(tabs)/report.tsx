@@ -86,7 +86,7 @@ const Report = () => {
   const ios = Platform.OS == "ios";
   const topMargin = ios ? "pt-3" : "pt-10";
 
-  const [related, setRelated] = useState(false); 
+  const [related, setRelated] = useState(false);
 
   return (
     <ScrollView className="bg-[#ffccd5] h-full">
