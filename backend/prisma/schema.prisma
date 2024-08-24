@@ -35,7 +35,7 @@ enum ReportStatus {
 model User {
   id              String        @id @default(uuid())
   name            String
-  emailId         String        @unique
+  emailId         String       
   clerkId         String        @unique
   status ProfileStatus
 

@@ -22,3 +22,7 @@ export const authenticateAdmin = asyncHandler(async(req: Request, res: Response,
     req.user = user
     next()
 })
+
+// export const authenticateUser = asyncHandler(async(req: Request, res: Response, next: NextFunction)=>{
+
+// })

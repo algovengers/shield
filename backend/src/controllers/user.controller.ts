@@ -22,6 +22,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
       name: data.name,
       emailId: data.email,
       clerkId: data.clerkId,
+      status : "pending"
       
     }
   })
