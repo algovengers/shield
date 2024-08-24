@@ -13,19 +13,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id          String        @id @default(uuid())
-  name        String
-  emailId     String        @unique
-  clerkId     String        @unique
-
-  userDataId  String?
-  userData    UserData?
-  sos         SOS[]
-  crimeReport CrimeReport[]
-  favlist     Favlist[]
+enum ProfileStatus {
+  pending
+  approved
 }
 
+enum SOStatus {
+  pending //When the sos button is clicked
+  ackRequest //When the police clicks a button if it's serious
+  serious //When user confirms it's serious
+  minor //When user rejects it's serious
+  resolved // When police sets it is resolved (This will only happen if the status was marked as serious)
+
+}
+
+enum ReportStatus {
+  pending
+  resolved
+}
+
+model User {
+  id              String        @id @default(uuid())
+  name            String
+  emailId         String        @unique
+  clerkId         String        @unique
+  status ProfileStatus
+
+  userDataId      String?
+  userData        UserData?
+  sos             SOS[]
+  crimeReport     CrimeReport[]
+  favNonUserId     FavNonUserlist[] @relation("idOfNonUsers")
+  favuserId        FavUserlist[] @relation("UserId")
+  favfavid         FavUserlist[] @relation("FavId")
+  receivedRequests FavRequest[] @relation("ToUser")
+  sentRequests     FavRequest[] @relation("forUser")
+  ackSent          userAck[]    @relation("fromAck")
+}
+
+model FavRequest {
+  id    String @id @default(uuid())
+  forId String
+  toId  String
+  state String
+  for   User   @relation("forUser", fields: [forId], references: [id])
+  to    User   @relation("ToUser", fields: [toId], references: [id])
+}
+
+
+// data comes from aadhar
 model UserData {
   id      String  @id @default(uuid())
   age     Int?
@@ -33,6 +69,8 @@ model UserData {
   phone   String?
   pincode String?
   photo   String?
+  aadhaar  String?
+
 
   user User @relation(fields: [id], references: [id])
 }
@@ -42,59 +80,78 @@ model Admin {
   username     String @unique
   password     String
   refreshToken String?
-
-  sos          SOS[]
-  adminSosRec  AdminSosRec[]
-  crimeReports CrimeReport[] @relation("AdminCrimeReports")
 }
 
 model SOS {
-  sosid    String   @id @default(uuid())
-  userid   String
-  observer String
-  status   String
+  id    String   @id @default(uuid())
+  userId   String
+  status   SOStatus
   datetime DateTime
-
-  user        User          @relation(fields: [userid], references: [id])
-  admin       Admin         @relation(fields: [observer], references: [id])
-  adminSosRec AdminSosRec[]
+  location String
+  
+  ackLinks ackLink[] @relation("ackLinkforNoUsers")
+  ack      userAck[] @relation("sosAck")
+  nonUserAck   nonUserAck[] @relation("sosNonuserAck")
+  user        User          @relation(fields: [userId], references: [id])
 }
 
-model Favlist {
-  userid   String
-  fullname String
-  phone    String
-  email    String?
-  relation String
+model FavUserlist {
+  id   String   @id @default(uuid())
+  userId String
+  favid String
+  user  User @relation("UserId", fields: [userId], references: [id])
+  fav  User @relation("FavId", fields: [favid], references: [id])
+}
 
-  user User @relation(fields: [userid], references: [id])
+model FavNonUserlist {
+  id String @id @default(uuid())
+  userId String
+  user  User @relation("idOfNonUsers", fields: [userId], references: [id])
+  name String
+  email String?
+  phone String?
 
-  @@id([userid, phone]) // Assuming phone is unique per user
+  links ackLink[] 
+  ack nonUserAck[]  @relation("fromNonuserAck")
+}
+
+model userAck {
+  id String @id @default(uuid())
+  sosId String
+  fromId String
+
+  sos SOS @relation("sosAck", fields: [sosId], references: [id])
+  from User @relation("fromAck",fields: [fromId],references: [id])
+}
+
+model nonUserAck {
+  id String @id @default(uuid())
+  sosId String
+  fromId String 
+
+  sos SOS @relation("sosNonuserAck", fields: [sosId], references: [id])
+  from FavNonUserlist @relation("fromNonuserAck", fields: [fromId], references: [id])
 }
 
 model CrimeReport {
   id          String   @id @default(uuid())
-  userid      String
+  userId      String
   title       String
   description String
   medialink   String?
   mediatype   String?
-  observer    String?
-  status      String
+  status      ReportStatus
   crimetime   DateTime
   reporttime  DateTime
 
-  user  User   @relation(fields: [userid], references: [id])
-  admin Admin? @relation(fields: [observer], references: [id], name: "AdminCrimeReports")
+  user  User   @relation(fields: [userId], references: [id])
 }
 
-model AdminSosRec {
-  datetime DateTime
-  adminid  String
-  sosid    String
+model ackLink {
+  id String @id @default(uuid())
+  forId String
+  fromId String
 
-  admin Admin @relation(fields: [adminid], references: [id])
-  sos   SOS   @relation(fields: [sosid], references: [sosid])
-
-  @@id([adminid, sosid, datetime])
+  from SOS @relation("ackLinkforNoUsers",fields: [fromId],references: [id])
+  for FavNonUserlist @relation(fields: [forId],references: [id])
 }
