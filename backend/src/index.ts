@@ -4,8 +4,19 @@ import express from "express"
 import { router } from "./routes/router";
 import cors from 'cors'
 import cookieParser from "cookie-parser"
+import { authRouter } from "./routes/authRouter";
+import { ClerkExpressRequireAuth, StrictAuthProp } from "@clerk/clerk-sdk-node";
+
+
 
 const app = express();
+
+
+declare global {
+    namespace Express {
+      interface Request extends StrictAuthProp {}
+    }
+  }
 
 // middlewares
 app.use(express.urlencoded({ extended: true }));
@@ -22,6 +33,10 @@ app.get('/hi',(req,res)=>{
 })
 
 app.use("/api/v1",router)
+
+app.use(ClerkExpressRequireAuth())
+
+app.use('/api/v1',authRouter)
 
 app.listen(8000,()=>{
     console.log("Server Started")
