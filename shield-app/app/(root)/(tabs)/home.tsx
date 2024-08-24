@@ -1,9 +1,11 @@
 import HomeHero from "@/components/HomeHero";
 import HomeSlider from "@/components/HomeSlider";
 import { images } from "@/constants";
-import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
+import { fetchAPI } from "@/lib/fetch";
+import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/clerk-expo";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import {
   Image,
   ImageSourcePropType,
@@ -18,6 +20,24 @@ import {
 
 export default function Home() {
   const { user } = useUser();
+  const {getToken } = useAuth()
+  
+  // async function getData(){
+  //   const token = await getToken()
+  //   console.log("Her is the token" + token)
+  //   const res = await fetchAPI('/api/v1/hii',{
+  //     method: "POST",
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${token}`,
+  //     }
+  //   })
+  //   console.log(res)
+  // }
+  // useEffect(()=>{
+  //   // getData()
+  // },[])
+
   const imageUrl = user?.imageUrl
     ? (user.imageUrl as ImageSourcePropType)
     : images.authlogo;
