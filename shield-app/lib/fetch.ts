@@ -1,8 +1,18 @@
 import { useState, useEffect, useCallback } from "react";
 
+
+
 export const fetchAPI = async (url: string, options?: RequestInit) => {
   try {
-    const response = await fetch(url, options);
+    console.log("Hi")
+    const backend_url = process.env.EXPO_PUBLIC_SERVER_URL
+    console.log(backend_url)
+    if(!backend_url){
+      console.log("No backend url")
+      return;
+    }
+    console.log(backend_url + url, options)
+    const response = await fetch(backend_url+url, options);
     if (!response.ok) {
       new Error(`HTTP error! status: ${response.status}`);
     }

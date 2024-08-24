@@ -73,7 +73,7 @@ const loginAdmin = asyncHandler(async (req: Request, res: Response) => {
   );
 
   // updateToken
-  const updatedToken = prisma.user.update({
+  const updatedToken = prisma.admin.update({
     where: { id: userExists.id },
     data: { refreshToken },
   });

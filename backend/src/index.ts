@@ -13,6 +13,14 @@ app.use(express.json());
 app.use(cookieParser())
 app.use(cors(({credentials: true, origin: true})))
 
+
+app.get('/hi',(req,res)=>{
+    console.log("Hit")
+    res.status(200).json({
+        message: "HI"
+    })
+})
+
 app.use("/api/v1",router)
 
 app.listen(8000,()=>{

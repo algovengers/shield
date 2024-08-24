@@ -1,5 +1,4 @@
 import email from "@/assets/icons/email.png";
-import phone from "@/assets/icons/phone.png";
 import education from "@/assets/icons/education.png";
 import health from "@/assets/icons/health.png";
 import licon from "@/assets/icons/licon.png";
@@ -74,7 +73,6 @@ export const icons = {
   eye,
   licon,
   eyeHide,
-  phone,
   health,
   email,
   eyecross,
