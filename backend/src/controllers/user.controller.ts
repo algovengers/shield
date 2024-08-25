@@ -4,6 +4,7 @@ import { asyncHandler } from "../utils/asyncHandler";
 import { prisma, exclude } from "../utils/prisma";
 import ApiResponse from "../utils/ApiResponse";
 import z from "zod";
+import { RequireAuthProp } from "@clerk/clerk-sdk-node";
 
 
 const signup_user_schema = z.object({
@@ -29,4 +30,29 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   return res.status(200).json(new ApiResponse(200, "user Sucessfully created"));
 });
 
-export {registerUser}
+const getUsers = asyncHandler(async(req: Request, res: Response)=>{
+  // const data = (req.auth as any).clerkId
+  const query = req.query.q
+  
+  const resp = await prisma.user.findMany({
+    where: {
+      name: {
+        contains: String(query),
+        mode: "insensitive"
+      }
+
+    }
+  })
+  res.status(200).json(new ApiResponse(200,resp))
+})
+
+const getMydetails = async(clerkId: string)=>{
+  const data = await prisma.user.findFirst({
+    where: {
+      clerkId
+    }
+  })
+  return data;
+}
+
+export {registerUser,getUsers,getMydetails}
