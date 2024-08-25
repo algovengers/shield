@@ -10,6 +10,8 @@ import React, { useState } from "react";
 import { icons, images } from "@/constants";
 import CustomButton from "@/components/CustomButton";
 import AddContact from "@/components/AddContact";
+import { useAuth } from "@clerk/clerk-expo";
+import { fetchAPI } from "@/lib/fetch";
 
 type ContactProps = {
   name: string;
@@ -26,9 +28,24 @@ const Setup = () => {
     phone: "",
   });
 
+  const {getToken} = useAuth()
+  const addNonContact = async()=>{
+    const token = getToken()
+    await fetchAPI('/api/v1/createNonFavUser',{
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      body: JSON.stringify({form})
+    })
+  }
+
+
   const [added, setAdded] = useState(0);
 
   const handleAddContact = () => {
+    addNonContact()
     if (added < max) {
       setAdded(added + 1);
     }

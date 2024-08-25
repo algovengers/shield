@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import { images } from "@/constants";
 import { useUser } from "@clerk/clerk-expo";
-import { router } from "expo-router";
+import { Href, router } from "expo-router";
 
 const Profile = () => {
   const { user } = useUser();
@@ -45,9 +45,9 @@ const Profile = () => {
 
       {/*Buttons for adding contact. Non - contact and fav contacts !*/}
       <View className="flex-col gap-y-8 justify-center items-center mt-6 mx-2">
-        <TouchableOpacity
+       <TouchableOpacity
           onPress={() => {
-            router.push("/add-contact");
+            router.push("/add-contact" as Href<string>);
           }}
           className="flex flex-row justify-center items-center bg-white rounded-lg p-2 px-4"
         >
@@ -68,7 +68,7 @@ const Profile = () => {
               Non-Contact
             </Text>
           </View>
-        </TouchableOpacity>
+       </TouchableOpacity>
       </View>
     </ScrollView>
   );

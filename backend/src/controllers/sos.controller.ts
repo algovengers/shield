@@ -1,10 +1,10 @@
 import { RequireAuthProp } from "@clerk/clerk-sdk-node";
 import { asyncHandler } from "../utils/asyncHandler";
 import { Response, Request } from "express";
-import { prisma } from "utils/prisma";
+import { prisma } from "../utils/prisma";
 import { User } from "@prisma/client";
 import { z } from "zod";
-import ApiResponse from "utils/ApiResponse";
+import ApiResponse from "../utils/ApiResponse";
 
 export const createSos = asyncHandler(
   async (req: RequireAuthProp<Request>, res: Response) => {

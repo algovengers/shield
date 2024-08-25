@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { icons, images } from "@/constants";
+import { useAuth } from "@clerk/clerk-expo";
+import { fetchAPI } from "@/lib/fetch";
 
 type NotiProps = {
   name: string;
@@ -17,7 +19,7 @@ type NotiProps = {
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState<NotiProps>([]);
-
+  const {getToken} =useAuth()
   useEffect(() => {
     setNotifications([
       {
@@ -47,6 +49,20 @@ const Notifications = () => {
       },
       
     ]);
+    
+    async function getData(){
+      const token = await getToken()
+
+      const data = await fetchAPI("/api/v1/getNotifications",{
+        method: "GET",
+        headers: {
+        'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      console.log(data)
+    }
+    getData()
   }, []);
 
   const handleRemove = (index: number) => {

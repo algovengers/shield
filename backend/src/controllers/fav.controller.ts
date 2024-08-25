@@ -72,16 +72,14 @@ export const declineFavRequest = asyncHandler(async(req:RequireAuthProp<Request>
 
 export const createFavRequest = asyncHandler(async(req:RequireAuthProp<Request>,res: Response)=>{
     const data = z.object({
-        name: z.string(),
-        email: z.string()
+        clerkId: z.string()
     }).parse(req.body)
 
-    const clerkId = (req.auth as any).clerkId
+    const clerkId = req.auth.userId
 
     const getUser = await prisma.user.findFirst({
         where: {
-            name: data.name,
-            emailId: data.email
+            clerkId: data.clerkId
         }
     })
     const myDetails = await prisma.user.findFirst({

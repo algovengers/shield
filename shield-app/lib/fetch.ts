@@ -11,7 +11,7 @@ export const fetchAPI = async (url: string, options?: RequestInit) => {
       console.log("No backend url")
       return;
     }
-    console.log(backend_url + url, options)
+    // console.log(backend_url + url, options)
     const response = await fetch(backend_url+url, options);
     if (!response.ok) {
       new Error(`HTTP error! status: ${response.status}`);

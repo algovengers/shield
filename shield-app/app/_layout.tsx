@@ -67,6 +67,12 @@ export default function RootLayout() {
               headerShown: false,
             }}
           />
+          <Stack.Screen 
+            name="(contact)"
+            options={{
+              headerShown: false
+            }}
+          />
           <Stack.Screen name="+not-found" />
         </Stack>
       </ClerkLoaded>
