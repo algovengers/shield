@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { images } from "@/constants";
 import { useUser } from "@clerk/clerk-expo";
+import { router } from "expo-router";
 
 const Profile = () => {
   const { user } = useUser();
@@ -44,17 +45,23 @@ const Profile = () => {
 
       {/*Buttons for adding contact. Non - contact and fav contacts !*/}
       <View className="flex-col gap-y-8 justify-center items-center mt-6 mx-2">
-        <TouchableOpacity>
-          <View className="flex flex-row justify-center items-center bg-white rounded-lg p-2 px-4">
-            <Image source={images.sos} className="w-8 h-8" />
-            <Text className="text-neutral-700 text-lg font-pbold ml-2">
-              Add Contact
-            </Text>
-          </View>
+        <TouchableOpacity
+          onPress={() => {
+            router.push("/add-contact");
+          }}
+          className="flex flex-row justify-center items-center bg-white rounded-lg p-2 px-4"
+        >
+          <Image source={images.sos} className="w-8 h-8" />
+          <Text className="text-neutral-700 text-lg font-pbold ml-2">
+            Add Contact
+          </Text>
         </TouchableOpacity>
-            
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            router.push("/setup");
+          }}
+        >
           <View className="flex-row justify-center items-center bg-white rounded-lg p-2 px-4">
             <Image source={images.sosx} className="w-8 h-8" />
             <Text className="text-neutral-700 text-lg font-pbold ml-2">
@@ -63,7 +70,6 @@ const Profile = () => {
           </View>
         </TouchableOpacity>
       </View>
-
     </ScrollView>
   );
 };

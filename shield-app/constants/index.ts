@@ -1,6 +1,6 @@
 import email from "@/assets/icons/email.png";
-
 import phone from "@/assets/icons/phone.png";
+import dlt from "@/assets/icons/delete.png";
 import education from "@/assets/icons/education.png";
 import accept from "@/assets/icons/accept.png"
 import health from "@/assets/icons/health.png";
@@ -87,12 +87,14 @@ export const icons = {
   health,
   email,
   notifications,
+  phone,
   eyecross,
   google,
   ricon,
   home,
   lock,
   person,
+  dlt,
   upload,
   education,
   profile,
