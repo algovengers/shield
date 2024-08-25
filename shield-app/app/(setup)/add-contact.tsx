@@ -8,14 +8,49 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { icons, images } from "@/constants";
 import CustomButton from "@/components/CustomButton";
+import { useAuth } from "@clerk/clerk-expo";
+import { fetchAPI } from "@/lib/fetch";
 
 const max = 5;
 
 const Setup = () => {
   const [contact, setContact] = useState([]);
+  const [keyword, setKeyword] = useState("")
+  const [userData, setUserData] = useState<any>([])
+  const { getToken } = useAuth()
+
+  async function handleAdd(clerkId: string) {
+    const token = await getToken()
+    const data = await fetchAPI("/api/v1/createFavRequest", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        clerkId: clerkId
+      })
+    })
+    console.log(data)
+  }
+  useEffect(() => {
+    async function getData() {
+      const token = await getToken()
+      const data = await fetchAPI("/api/v1/getUsers?q=" + keyword, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      setUserData(data.data)
+      console.log(data)
+    }
+    getData()
+  }, [keyword])
 
   const addtoFavContact = () => {
     console.log("Add to fav contact");
@@ -42,31 +77,36 @@ const Setup = () => {
               placeholder="Search"
               placeholderTextColor={"gray"}
               className="flex-1 text-base pl-1 tracking-wider h-4"
+              value={keyword} onChangeText={(text) => setKeyword(text)}
             />
           </View>
         </View>
+        {
+          userData.length > 0 && userData.map((d) => (
 
-        <View className="mx-2 mt-4 py-2 bg-rose-100 rounded-2xl">
-          <View className="flex flex-row items-center justify-between px-4 py-2">
-            <View className="flex flex-row items-center">
-              <Image source={images.sos} className="w-10 h-10 rounded-full" />
-              <View className="ml-3">
-                <Text className="text-lg font-bold">Joe Black</Text>
+            <View className="mx-2 mt-4 py-2 bg-rose-100 rounded-2xl" key={d.clerkId}>
+              <View className="flex flex-row items-center justify-between px-4 py-2">
+                <View className="flex flex-row items-center">
+                  <Image source={images.sos} className="w-10 h-10 rounded-full" />
+                  <View className="ml-3">
+                    <Text className="text-lg font-bold">{d.name}</Text>
+                  </View>
+                </View>
+
+                <View className="flex flex-row items-center">
+                  <View className="flex flex-row items-center">
+                    <TouchableOpacity onPress={() => handleAdd(d.clerkId)}>
+                      <Image
+                        source={icons.accept}
+                        className="w-8 h-8 rounded-full"
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
             </View>
-
-            <View className="flex flex-row items-center">
-              <View className="flex flex-row items-center">
-                <TouchableOpacity onPress={() => addtoFavContact()}>
-                  <Image
-                    source={icons.accept}
-                    className="w-8 h-8 rounded-full"
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </View>
+          ))
+        }
 
         {contact && contact.length > 0 ? (
           <CustomButton

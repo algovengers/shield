@@ -30,21 +30,33 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   return res.status(200).json(new ApiResponse(200, "user Sucessfully created"));
 });
 
-const getUsers = asyncHandler(async(req: Request, res: Response)=>{
-  // const data = (req.auth as any).clerkId
-  const query = req.query.q
-  
+const getUsers = asyncHandler(async (req: RequireAuthProp<Request>, res: Response) => {
+  const query = req.query.q as string | undefined;
+  const clerkId = req.auth.userId;
+  console.log(req.auth)
+
   const resp = await prisma.user.findMany({
     where: {
-      name: {
-        contains: String(query),
-        mode: "insensitive"
-      }
+      AND: [
+        query
+          ? {
+              name: {
+                contains: query,
+                mode: "insensitive",
+              },
+            }
+          : {},
+        {
+          clerkId: {
+            not: clerkId,
+          },
+        },
+      ],
+    },
+  });
 
-    }
-  })
-  res.status(200).json(new ApiResponse(200,resp))
-})
+  res.status(200).json(new ApiResponse(200, resp));
+});
 
 const getMydetails = async(clerkId: string)=>{
   const data = await prisma.user.findFirst({

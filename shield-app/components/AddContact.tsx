@@ -10,6 +10,9 @@ import {
   ScrollView,
 } from "react-native";
 import { icons } from "@/constants";
+import { useState } from "react";
+import { fetchAPI } from "@/lib/fetch";
+import { useAuth } from "@clerk/clerk-expo";
 
 type AddContactProps = {
   value1: string;
@@ -28,6 +31,8 @@ const AddContact = ({
   onChangeText2,
   onChangeText3,
 }: AddContactProps) => {
+
+ 
   return (
     <>
       <ScrollView

@@ -36,6 +36,9 @@ export const getNotifications = asyncHandler(async(req:RequireAuthProp<Request>,
         const requests = await prisma.favRequest.findMany({
             where: {
                 toId: myData.id
+            },
+            include: {
+                from: true
             }
         })
         return {
