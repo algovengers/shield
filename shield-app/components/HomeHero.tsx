@@ -13,7 +13,7 @@ const HomeHero = () => {
           <Text className="font-pregular text-black mb-5 mt-2">
             SOS is disabled. To enable it please click here: {" "}
             <Link
-              href="/setup"
+              href="/profile"
               className="text-red-500 font-pbold"
             >
               Setup
