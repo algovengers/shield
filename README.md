@@ -12,16 +12,7 @@
 - **Report Crime:** Women can report crimes or incidents they witness or experience.
 - **Evidence Upload:** Ability to upload images, videos, or descriptions of the crime for accurate reporting.
 
-### 3. Women Education
-- **Educational Resources:** Access to educational materials and courses tailored for women in rural and urban areas.
-- **Empowerment Programs:** Information about government and non-profit programs supporting women’s education.
-
-### 4. Healthcare
-- **Periods Tracker:** A simple and intuitive tracker for menstrual cycles.
-- **Health Tips:** Regular updates and tips related to women’s health and well-being.
-- **Women-Only Chatbot:** A safe space for women to discuss health concerns and get advice from a dedicated AI chatbot.
-
-### 5. Police Dashboard
+### 3. Police Dashboard
 - **Location Tracking:** Police can log in to view the locations or track the IP address when the SoS button is clicked.
 - **Crime Reports Management:** Real-time notifications and access to crime reports submitted by women. Officers can review and take action on these reports promptly.
 

@@ -1,5 +1,9 @@
 import email from "@/assets/icons/email.png";
+
+import cancel from "@/assets/icons/cancel.png";
+import accept from "@/assets/icons/accept.png";
 import phone from "@/assets/icons/phone.png";
+import notifications from "@/assets/icons/notifications.png";
 import education from "@/assets/icons/education.png";
 import health from "@/assets/icons/health.png";
 import licon from "@/assets/icons/licon.png";
@@ -29,10 +33,12 @@ import i2 from "@/assets/images/2.png";
 import i3 from "@/assets/images/3.png";
 import i4 from "@/assets/images/4.png";
 import setup from "@/assets/images/setup.png";
+import profilebg from "@/assets/images/profilebg.png";
 
 export const images = {
   onboarding1,
   onboarding2,
+  profilebg,
   report,
   onboarding3,
   setup,
