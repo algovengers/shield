@@ -1,11 +1,9 @@
 import email from "@/assets/icons/email.png";
-<<<<<<< HEAD
-=======
+
 import cancel from "@/assets/icons/cancel.png";
 import accept from "@/assets/icons/accept.png";
 import phone from "@/assets/icons/phone.png";
 import notifications from "@/assets/icons/notifications.png";
->>>>>>> 1d560c5 (something)
 import education from "@/assets/icons/education.png";
 import health from "@/assets/icons/health.png";
 import licon from "@/assets/icons/licon.png";
