@@ -27,6 +27,9 @@ The following table provides a visual representation of the app's structure and 
 | **Authentication Feature**      | Women are requested to amke an account. Data will always be safe and secure.                                | ![SoS Feature](./readme-images/sign.jpg)  |
 | **Crime Reporting**  | Interface to report crimes with options to upload evidence.                                               | ![Crime Reporting](./readme-images/report.jpg) |
 | **SOS Setup**  | You have to add contacts to           enable the SOS feature                     | ![Crime Reporting](./readme-images/sos-setup.jpg) |
+| **Profile Page**  | Your own custom profile page for setting up procedure of the SOS                     | ![Crime Reporting](./readme-images/profile.jpg) |
+| **Notifications Page**  | Check your notifications over here                     | ![Crime Reporting](./readme-images/noti.jpg) |
+
 
 ## Getting Started
 
