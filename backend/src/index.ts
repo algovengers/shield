@@ -14,7 +14,9 @@ const app = express();
 
 declare global {
     namespace Express {
-      interface Request extends StrictAuthProp {}
+      interface Request extends StrictAuthProp {
+        clerkId: string
+      }
     }
   }
 

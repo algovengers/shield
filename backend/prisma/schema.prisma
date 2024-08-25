@@ -32,10 +32,16 @@ enum ReportStatus {
   resolved
 }
 
+enum FavRequestStatus {
+  pending
+  accepted
+  declined
+}
+
 model User {
   id              String        @id @default(uuid())
   name            String
-  emailId         String       
+  emailId         String        @unique
   clerkId         String        @unique
   status ProfileStatus
 
@@ -47,16 +53,16 @@ model User {
   favuserId        FavUserlist[] @relation("UserId")
   favfavid         FavUserlist[] @relation("FavId")
   receivedRequests FavRequest[] @relation("ToUser")
-  sentRequests     FavRequest[] @relation("forUser")
+  sentRequests     FavRequest[] @relation("fromUser")
   ackSent          userAck[]    @relation("fromAck")
 }
 
 model FavRequest {
   id    String @id @default(uuid())
-  forId String
+  fromId String
   toId  String
-  state String
-  for   User   @relation("forUser", fields: [forId], references: [id])
+  state FavRequestStatus
+  from   User   @relation("fromUser", fields: [fromId], references: [id])
   to    User   @relation("ToUser", fields: [toId], references: [id])
 }
 
