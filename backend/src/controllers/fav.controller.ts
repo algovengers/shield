@@ -75,6 +75,15 @@ export const createFavRequest = asyncHandler(async(req:RequireAuthProp<Request>,
 
     const clerkId = req.auth.userId
 
+    const isFav = await prisma.favUserlist.findFirst({where: {
+        favid: data.clerkId,
+        userId: clerkId
+    }})
+
+    if(isFav && isFav.id !== undefined){
+        throw new Error("Already added to fav list")
+    }
+
     const getUser = await prisma.user.findFirst({
         where: {
             clerkId: data.clerkId
