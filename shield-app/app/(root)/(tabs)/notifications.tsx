@@ -11,45 +11,12 @@ import { icons, images } from "@/constants";
 import { useAuth } from "@clerk/clerk-expo";
 import { fetchAPI } from "@/lib/fetch";
 
-type NotiProps = {
-  name: string;
-  message: string;
-  profileImage?: string;
-}[];
+
 
 const Notifications = () => {
-  const [notifications, setNotifications] = useState<NotiProps>([]);
+  const [notifications, setNotifications] = useState<any>([]);
   const {getToken} =useAuth()
-  useEffect(() => {
-    setNotifications([
-      {
-        profileImage: images.sos,
-        name: "Afeef Uddin",
-        message: "I need help! please call me",
-      },
-      {
-        profileImage: images.sos,
-        name: "Afeef Uddin",
-        message: "I need help! please call me",
-      },
-      {
-        profileImage: images.sos,
-        name: "Afeef Uddin",
-        message: "I need help! please call me",
-      },
-      {
-        profileImage: images.sos,
-        name: "Afeef Uddin",
-        message: "I need help! please call me",
-      },
-      {
-        profileImage: images.sos,
-        name: "Afeef Uddin",
-        message: "I need help! please call me",
-      },
-      
-    ]);
-    
+  useEffect(() => {    
     async function getData(){
       const token = await getToken()
 
@@ -60,10 +27,30 @@ const Notifications = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      console.log(data)
+      console.log("Here i am ",data.data)
+      setNotifications(data.data.requests)
     }
     getData()
   }, []);
+
+  const handleAcceptRequest = async(id: string,requesterId: string) =>{
+
+    //acceptFavRequest
+    const token = await getToken()
+
+    const data = await fetchAPI("/api/v1/acceptFavRequest",{
+      method: "POST",
+      headers: {
+      'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        requesterId,
+        favRequestId: id
+      })
+    })
+
+  }
 
   const handleRemove = (index: number) => {
     console.log("Remove Notification", index);
@@ -82,17 +69,19 @@ const Notifications = () => {
       </View>
 
       {/* Notification List */}
-      {notifications.map((notification, index) => (
+      {notifications.map((notification: any, index: number) => (
         <View key={index} className="mx-2 mt-4 py-2 bg-rose-100 rounded-2xl">
           <View className="flex flex-row items-center justify-between px-4 py-2">
             <View className="flex flex-row items-center">
               <Image
-                source={notification.profileImage as ImageSourcePropType}
+                source={images.sos}
                 className="w-10 h-10 rounded-full"
               />
               <View className="ml-3">
-                <Text className="text-lg font-bold">{notification.name}</Text>
-                <Text className="text-sm">{notification.message}</Text>
+                <Text className="text-lg font-bold">{notification.from.name}</Text>
+                <View className="flex flex-row flex-wrap">
+                <Text className="text-sm flex flex-row flex-wrap break-words">Hey I want to add you</Text>
+                </View>
               </View>
             </View>
             {/* Notification accept or cancel */}
@@ -105,7 +94,7 @@ const Notifications = () => {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => console.log("Accept Notification")}
+                  onPress={() => handleAcceptRequest(notification.id,notification.from.clerkId)}
                 >
                   <Image
                     source={icons.accept}

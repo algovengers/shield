@@ -11,8 +11,8 @@ export const getNotifications = asyncHandler(async(req:RequireAuthProp<Request>,
     // - sos
 
     //get user Details 
-
-    const myData = await getMydetails((req.auth as any).clerkId);
+    console.log(req.auth)
+    const myData = await getMydetails((req.auth as any).userId);
 
     // get sos
 
@@ -32,10 +32,12 @@ export const getNotifications = asyncHandler(async(req:RequireAuthProp<Request>,
         })
 
         // get fav request
-
+        console.log(myData.id)
+        console.log(myData)
         const requests = await prisma.favRequest.findMany({
             where: {
-                toId: myData.id
+                toId: myData.id,
+                state: "pending"
             },
             include: {
                 from: true

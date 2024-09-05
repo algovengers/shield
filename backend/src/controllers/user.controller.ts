@@ -59,9 +59,10 @@ const getUsers = asyncHandler(async (req: RequireAuthProp<Request>, res: Respons
 });
 
 const getMydetails = async(clerkId: string)=>{
+  console.log(clerkId)
   const data = await prisma.user.findFirst({
     where: {
-      clerkId
+      clerkId: clerkId
     }
   })
   return data;

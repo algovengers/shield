@@ -9,10 +9,9 @@ import { getMydetails } from "./user.controller";
 export const accpetFavRequest = asyncHandler(async(req:RequireAuthProp<Request>,res: Response)=>{
     const data = z.object({
         favRequestId: z.string(),
-        name: z.string(),
-        email: z.string()
+        requesterId: z.string(),
     }).parse(req.body)
-
+    console.log(data)
     const resp = await prisma.$transaction(async(prisma)=>{
 
         await prisma.favRequest.update({
@@ -26,13 +25,12 @@ export const accpetFavRequest = asyncHandler(async(req:RequireAuthProp<Request>,
 
         const getUser = await prisma.user.findFirst({
             where: {
-                name: data.name,
-                emailId: data.email
+                clerkId: data.requesterId
             }
         })
         const myDetails = await prisma.user.findFirst({
             where: {
-                clerkId: (req.auth as any).clerkId,
+                clerkId: (req.auth as any).userId,
             }
         })
         const resData = await prisma.favUserlist.create({
