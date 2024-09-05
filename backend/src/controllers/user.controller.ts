@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { ApiError } from "../utils/ApiError";
 import { asyncHandler } from "../utils/asyncHandler";
 import { prisma, exclude } from "../utils/prisma";
 import ApiResponse from "../utils/ApiResponse";
@@ -35,6 +34,8 @@ const getUsers = asyncHandler(async (req: RequireAuthProp<Request>, res: Respons
   const clerkId = req.auth.userId;
   console.log(req.auth)
 
+  const myData = await getMydetails(clerkId)
+
   const resp = await prisma.user.findMany({
     where: {
       AND: [
@@ -51,6 +52,13 @@ const getUsers = asyncHandler(async (req: RequireAuthProp<Request>, res: Respons
             not: clerkId,
           },
         },
+        {
+          favfavid: {
+            none: {
+              userId: myData.id
+            }
+          }
+        }
       ],
     },
   });

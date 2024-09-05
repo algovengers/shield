@@ -52,7 +52,21 @@ const Notifications = () => {
 
   }
 
-  const handleRemove = (index: number) => {
+  const handleRemove = async(index: number,id: string) => {
+    //declineFavRequest
+
+    const token = await getToken()
+    const data = await fetchAPI("/api/v1/declineFavRequest",{
+      method: "POST",
+      headers: {
+      'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        favRequestId: id
+      })
+    })
+
     console.log("Remove Notification", index);
     const newNotifications = [...notifications];
     newNotifications.splice(index, 1);
@@ -87,7 +101,7 @@ const Notifications = () => {
             {/* Notification accept or cancel */}
             <View className="flex flex-row items-center">
               <View className="flex flex-row items-center">
-                <TouchableOpacity onPress={() => handleRemove(index)}>
+                <TouchableOpacity onPress={() => handleRemove(index,notification.id)}>
                   <Image
                     source={icons.cancel}
                     className="w-8 h-8 mr-2 rounded-full"
